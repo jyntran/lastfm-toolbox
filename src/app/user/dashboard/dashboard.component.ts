@@ -12,4 +12,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+  logout() {
+  	localStorage.removeItem('lastfm_toolbox_key');
+  }
+
 }
