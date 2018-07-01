@@ -1,9 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { AuthenticationService } from './authentication.service';
-import { Router } from '@angular/router';
 
-import { AuthenticationServiceStub, RouterStub } from '../../mocks/mocks';
+import { AuthenticationServiceStub } from '../../mocks/mocks';
 
 describe('AuthenticationService', () => {
   beforeEach(() => {
@@ -12,18 +11,13 @@ describe('AuthenticationService', () => {
       	{
       		provide: AuthenticationService,
       		useClass: AuthenticationServiceStub
-      	},
-      	{
-      		provide: Router,
-      		useClass: RouterStub
       	}
       ]
     });
   });
 
-  it('should be created', inject([AuthenticationService, Router],
-  	(auth: AuthenticationService, router: Router) => {
+  it('should be created', inject([AuthenticationService],
+  	(auth: AuthenticationService) => {
     expect(auth).toBeTruthy();
-    expect(router).toBeTruthy();
   }));
 });
