@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CoreRoutingModule } from './core-routing.module';
+
 import { AuthenticationService } from './services/authentication.service';
+import { AuthGuard } from './guard/auth.guard';
+
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -19,7 +22,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   	RouterModule
   ],
   providers: [
-  	AuthenticationService
+  	AuthenticationService,
+  	AuthGuard
   ]
 })
 export class CoreModule { }

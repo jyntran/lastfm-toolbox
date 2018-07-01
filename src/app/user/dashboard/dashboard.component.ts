@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,13 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+  	private authService: AuthenticationService,
+  ) { }
 
   ngOnInit() {
   }
 
   logout() {
-  	localStorage.removeItem('lastfm_toolbox_key');
+  	this.authService.logout();
   }
 
 }
