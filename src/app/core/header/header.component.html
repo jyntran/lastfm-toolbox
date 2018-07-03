@@ -1,0 +1,9 @@
+<nav>
+	<ul>
+		<li><a routerLink="/home">Home</a></li>
+		<li *ngIf="isLoggedIn()"><a routerLink="/user/dashboard">Dashboard</a></li>
+		<li *ngIf="isLoggedIn()"><a routerLink="/user/manual-scrobbler">Manual Scrobbler</a></li>
+		<li *ngIf="isLoggedIn()"><a routerLink="/user/album-scrobbler">Album Scrobbler</a></li>
+		<li *ngIf="!isLoggedIn()"><a routerLink="/login">Login</a></li>
+	</ul>
+</nav>

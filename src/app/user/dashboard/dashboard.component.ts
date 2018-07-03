@@ -7,12 +7,14 @@ import { AuthenticationService } from '../../core/services/authentication.servic
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  user: any;
 
   constructor(
-  	private authService: AuthenticationService,
+    private authService: AuthenticationService,
   ) { }
 
   ngOnInit() {
+    this.user = this.authService.getUser();
   }
 
   logout() {

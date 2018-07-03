@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AuthenticationServiceStub } from '../../mocks/mocks';
+import { ActivatedRouteStub, AuthenticationServiceStub } from '../../mocks/mocks';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,6 +16,10 @@ describe('LoginComponent', () => {
         {
           provide: AuthenticationService,
           useClass: AuthenticationServiceStub
+        },
+        {
+          provide: ActivatedRoute,
+          useClass: ActivatedRouteStub
         }
       ]
     })
