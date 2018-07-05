@@ -1,0 +1,38 @@
+<h2>Plaintext Scrobbler</h2>
+<label>Album Name:</label>
+<input
+type="text"
+name="albumName"
+[ngModel]="albumName"
+(ngModelChange)="onAlbumNameChange($event)"
+[value]="albumName"
+>
+<label>Album Artist Name:</label>
+<input
+type="text"
+name="albumArtistName"
+[ngModel]="albumArtistName"
+(ngModelChange)="onAlbumArtistNameChange($event)"
+[value]="albumArtistName"
+>
+<br>
+<label>Paste list of tracks here:
+</label>
+<br>
+<textarea rows="10" cols="50"
+name="plaintextData"
+[ngModel]="plaintextData"
+(ngModelChange)="onTextareaChange($event)"
+[value]="plaintextData">
+</textarea>
+<button (click)="parse()">
+Parse
+</button>
+<ul>
+	<li *ngFor="let track of tracks">
+		{{track.number}}. {{track.name}} - {{track.artist}}
+	</li>
+</ul>
+<button (click)="scrobble()">
+Scrobble
+</button>

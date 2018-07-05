@@ -14,7 +14,6 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
 
-
 @NgModule({
   declarations: [
     LoginComponent,
