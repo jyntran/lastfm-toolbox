@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LastfmService } from '../../core/services/lastfm.service';
 
 @Component({
   selector: 'app-manual-scrobbler',
@@ -10,7 +11,9 @@ export class ManualScrobblerComponent implements OnInit {
   artistName: string = '';
   trackName: string = '';
 
-  constructor() { }
+  constructor(
+    private lastfm: LastfmService
+  ) { }
 
   ngOnInit() {
   }
@@ -28,5 +31,13 @@ export class ManualScrobblerComponent implements OnInit {
   }
 
   scrobble() {
+    this.lastfm.scrobbleTrack({
+      name: this.trackName,
+      artist: this.artistName,
+      album: this.albumName
+    })
+    .subscribe((data: any) => {
+      console.log(data);
+    });
   }
 }

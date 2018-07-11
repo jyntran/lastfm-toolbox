@@ -105,6 +105,10 @@ export class LastfmService {
     });
   }
 
+  scrobbleTrack(track: any) {
+    return this.scrobble([track]);
+  }
+
   scrobble(tracks: Array<any>) {
     let method = 'track.scrobble';
     let params = {
