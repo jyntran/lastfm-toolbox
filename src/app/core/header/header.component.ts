@@ -7,6 +7,7 @@ import { AuthenticationService } from '../../core/services/authentication.servic
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  isMenuActive: boolean = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -17,5 +18,9 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn() {
     return this.authService.isLoggedIn();
+  }
+
+  toggleMenu() {
+    this.isMenuActive = !this.isMenuActive;
   }
 }

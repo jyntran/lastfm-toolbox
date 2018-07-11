@@ -11,7 +11,7 @@ export class PlaintextScrobblerComponent implements OnInit {
   plaintextData: string = '';
   albumName: string = '';
   albumArtistName: string = '';
-  tracks = [];
+  tracks: Array<string>;
   
   constructor(
   	private lastfm: LastfmService
@@ -42,14 +42,20 @@ export class PlaintextScrobblerComponent implements OnInit {
   	});
   	let tracks = [];
   	trackList.forEach((t) => {
-  		let matched = t.match(Regex.plaintextTrack);
-  		let track = {
-  			number: matched[1],
-  			name: matched[2],
-  			artist: this.albumArtistName,
-  			album: this.albumName
-  		};
-  		tracks.push(track);
+      if (t != null) {
+    		let matched = t.match(Regex.plaintextTrack);
+        if (matched == null) {
+          tracks = undefined;
+        } else {
+      		let track = {
+      			number: matched[1],
+      			name: matched[2],
+      			artist: this.albumArtistName,
+      			album: this.albumName
+      		};
+      		tracks.push(track);
+        }
+      }
   	});
   	this.tracks = tracks;
   }

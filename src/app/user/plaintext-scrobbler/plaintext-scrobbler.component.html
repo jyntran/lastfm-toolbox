@@ -1,38 +1,79 @@
-<h2>Plaintext Scrobbler</h2>
-<label>Album Name:</label>
-<input
-type="text"
-name="albumName"
-[ngModel]="albumName"
-(ngModelChange)="onAlbumNameChange($event)"
-[value]="albumName"
->
-<label>Album Artist Name:</label>
-<input
-type="text"
-name="albumArtistName"
-[ngModel]="albumArtistName"
-(ngModelChange)="onAlbumArtistNameChange($event)"
-[value]="albumArtistName"
->
-<br>
-<label>Paste list of tracks here:
-</label>
-<br>
-<textarea rows="10" cols="50"
-name="plaintextData"
-[ngModel]="plaintextData"
-(ngModelChange)="onTextareaChange($event)"
-[value]="plaintextData">
-</textarea>
-<button (click)="parse()">
-Parse
-</button>
-<ul>
-	<li *ngFor="let track of tracks">
-		{{track.number}}. {{track.name}} - {{track.artist}}
-	</li>
-</ul>
-<button (click)="scrobble()">
-Scrobble
-</button>
+<h2 class="title is-5">Plaintext Scrobbler</h2>
+<div class="columns">
+  <div class="column is-one-third">
+    <div class="field">
+    	<label class="label">Album Name:</label>
+    	<div class="control">
+    		<input
+    			class="input"
+    			type="text"
+    			name="albumName"
+    			[ngModel]="albumName"
+    			(ngModelChange)="onAlbumNameChange($event)"
+    			[value]="albumName"
+    		>
+    	</div>
+    </div>
+    <div class="field">
+    	<label class="label">Album Artist Name:</label>
+    	<div class="control">
+    		<input
+    			class="input"
+    			type="text"
+    			name="albumArtistName"
+    			[ngModel]="albumArtistName"
+    			(ngModelChange)="onAlbumArtistNameChange($event)"
+    			[value]="albumArtistName"
+    		>
+    	</div>
+    </div>
+    <div class="field">
+    	<label class="label">Paste list of tracks here:</label>
+    	<div class="control">
+    		<textarea
+    			rows="10" cols="50"
+    			class="textarea"
+    			name="plaintextData"
+    			[ngModel]="plaintextData"
+    			(ngModelChange)="onTextareaChange($event)"
+    			[value]="plaintextData">
+    		</textarea>
+    	</div>
+    </div>
+    <div class="field">
+    	<button class="button" (click)="parse()">
+    	Parse
+    	</button>
+    </div>
+  </div>
+  <div class="column">
+    <label class="label">Tracks</label>
+    <div *ngIf="tracks">
+      <div class="field" *ngIf="tracks">
+        <button class="button" (click)="scrobble()">
+        Scrobble All
+        </button>
+      </div>
+      <table class="table is-hoverable" *ngIf="tracks">
+        <thead>
+          <th>#</th>
+          <th>Title</th>
+          <th>Artist</th>
+          <th *ngIf="albumName">Album</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let track of tracks"
+          class="track">
+            <td>{{track.number}}.</td>
+            <td>{{track.name}}</td>
+            <td>{{track.artist}}</td>
+            <td *ngIf="albumName">{{albumName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!tracks">
+      No tracks found
+    </div>
+  </div>
+</div>
