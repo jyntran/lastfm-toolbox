@@ -1,1 +1,18 @@
 <h2 class="title is-5">Album Scrobbler</h2>
+<app-search></app-search>
+<app-lookup
+(emitAlbum)="findAlbum($event)"
+[album]="album">
+</app-lookup>
+<app-options
+(emitEvent)="languageChange($event)"
+[album]="album"
+[language]="language"
+>
+</app-options>
+<app-result
+(emitScrobble)="scrobble($event)"
+[album]="album"
+[language]="language"
+>
+</app-result>

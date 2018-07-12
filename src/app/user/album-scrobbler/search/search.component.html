@@ -1,0 +1,21 @@
+<div class="box">
+	<form #searchForm="ngForm"
+	(ngSubmit)="lookup()">
+		<div class="field">
+		  <label class="label">Search for album</label>
+		  <div class="control">
+		    <input class="input" type="text" placeholder="Enter search query here"
+		    required
+		    name="query"
+		    [ngModel]="query"
+		    (ngModelChange)="onChange($event)"
+		    [value]="query">
+		  </div>
+		</div>
+	  	<div class="field">
+		  <div class="control">
+			  <button class="button">Search</button>
+			</div>
+		</div>
+	</form>
+</div>

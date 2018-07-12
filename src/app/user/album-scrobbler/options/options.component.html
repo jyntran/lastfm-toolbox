@@ -1,0 +1,35 @@
+<div class="box" *ngIf="album">
+	<div class="field">
+	  <label class="label">Album Title Language</label>
+		<div class="select">
+		  <select
+		    name="currentLangTitle"
+		    [ngModel]="language.album"
+		    (ngModelChange)="onLangAlbumChange($event)">
+		    <option *ngFor="let lang of album.langTitle" [value]="lang">{{lang}}</option>
+		  </select>
+		</div>
+	</div>
+	<div class="field">
+	  <label class="label">Track Name Language</label>
+		<div class="select">
+		  <select
+		    name="currentLangTrack"
+		    [ngModel]="language.track"
+		    (ngModelChange)="onLangTrackChange($event)">
+		    <option *ngFor="let lang of album.langTrack" [value]="lang">{{lang}}</option>
+		  </select>
+		</div>
+	</div>
+	<div class="field">
+	  <label class="label">Artist Name Language</label>
+		<div class="select">
+		  <select
+		    name="currentLangArtist"
+		    [ngModel]="language.artist"
+		    (ngModelChange)="onLangArtistChange($event)">
+		    <option *ngFor="let lang of album.langArtist" [value]="lang">{{lang}}</option>
+		  </select>
+		</div>
+	</div>
+</div>
