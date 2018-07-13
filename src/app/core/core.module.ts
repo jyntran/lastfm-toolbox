@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './guard/auth.guard';
 import { LastfmService } from './services/lastfm.service';
+import { LookupService } from './services/lookup.service';
 import { MD5Service } from './services/md5.service';
 
 import { LoginComponent } from './login/login.component';
@@ -33,6 +34,7 @@ import { HeaderComponent } from './header/header.component';
     AuthenticationService,
     AuthGuard,
     LastfmService,
+    LookupService,
     MD5Service
   ]
 })
