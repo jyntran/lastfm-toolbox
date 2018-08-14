@@ -8,6 +8,7 @@ import { LastfmService } from '../../core/services/lastfm.service';
 })
 export class AlbumScrobblerComponent implements OnInit {
   album: any;
+  artist: any;
 
 	language = {
 		album: '',
@@ -43,6 +44,10 @@ export class AlbumScrobblerComponent implements OnInit {
 
   languageChange(language: any) {
   	this.language = language;
+  }
+
+  artistChange(artist) {
+    this.artist = artist;
   }
 
   scrobble(tracks) {

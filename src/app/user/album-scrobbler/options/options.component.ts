@@ -12,6 +12,9 @@ export class OptionsComponent implements OnInit {
 	@Output()
 	emitEvent = new EventEmitter();
 
+	@Output()
+	emitArtist = new EventEmitter();
+
 	@Input()
 	language = {
 		album: '',
@@ -37,6 +40,14 @@ export class OptionsComponent implements OnInit {
 	onLangArtistChange(newVal: string) {
 		this.language.artist = newVal;
 		this.emitEvent.next(this.language);
+	}
+
+	onArtistNameChange(newVal) {
+		this.emitArtist.next(newVal);
+	}
+
+	getArtistName(artist) {
+		return artist.names[this.language.artist];
 	}
 
 }

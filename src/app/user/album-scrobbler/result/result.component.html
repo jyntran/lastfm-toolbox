@@ -35,7 +35,25 @@
 						</td>
 						<td class="track-number-cell">{{track.number}}.</td>
 						<td><span class="track-name">{{getTrackName(track)}}</span></td>
-						<td class="artist-cell"><span class="artist-name">{{getArtistName(track)}}</span></td>
+						<!--<td class="artist-cell"><span class="artist-name">{{getArtistName(track)}}</span></td>-->
+						<td class="artist-cell">
+							<div class="select">
+								<select
+								name="artist"
+								[ngModel]="track.artist"
+								(ngModelChange)="setArtistName(track, $event)">
+								<option *ngFor="let artist of album.artists" [ngValue]="artist">{{getArtistName(artist)}}</option>
+								</select>
+							</div>
+							<div class="select">
+								<select *ngIf="track.artist.names"
+								name="lang"
+								[ngModel]="track.artist.lang"
+								(ngModelChange)="setArtistLang(track, $event)">
+								<option *ngFor="let lang of objectKeys(track.artist.names)" [value]="lang">{{lang}}</option>
+								</select>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

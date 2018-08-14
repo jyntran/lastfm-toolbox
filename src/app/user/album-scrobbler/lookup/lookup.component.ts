@@ -88,6 +88,7 @@ export class LookupComponent implements OnInit {
 
   private createVGMDBAlbum(albumData: any) {
 		let artistName = this.getArtistName(albumData);
+		let artistsNames = this.getArtistsNames(albumData);
 		let langArtist = Object.keys(artistName);
 		let discs = this.createVGMDbDiscs(albumData, artistName);
 		let langTitle = Object.keys(albumData.names);
@@ -96,15 +97,18 @@ export class LookupComponent implements OnInit {
 		langTitle.forEach((lang) => {
 			name[lang] = albumData.names[lang];
 		});
-	  	return new Album({
+		let album = new Album({
 	  		name: name,
 	  		artist: '-',
+	  		artists: artistsNames,
 	  		discs: discs,
 	  		artwork: albumData.picture_thumb,
 	  		langTitle: langTitle,
 	  		langTrack: langTrack,
 	  		langArtist: langArtist
 	  	});
+	  	console.log('album', album);
+	  	return album;
   }
 
   private getTrackLanguages(albumData: any) {
@@ -191,5 +195,38 @@ export class LookupComponent implements OnInit {
   		return data.distributor.names;
   	}
   	return data.names; // if all else fails
+  }
+
+  private getArtistsNames(data: any) {
+  	let artists = [];
+  	if ('performers' in data
+  		&& data.performers.length > 0) {
+		let performers = data.performers.map((elem) => {
+			return {...elem, type: 'performer'};
+  		});
+  		artists = [...artists, ...performers];
+  	}
+  	if ('composers' in data
+  		&& data.composers.length > 0) {
+		let composers = data.composers.map((elem) => {
+			return {...elem, type: 'composer'};
+  		});
+  		artists = [...artists, ...composers];
+  	}
+  	if ('arrangers' in data
+  		&& data.arrangers.length > 0) {
+		let arrangers = data.arrangers.map((elem) => {
+			return {...elem, type: 'arranger'};
+  		});
+  		artists = [...artists, ...arrangers];
+  	}
+  	if ('lyricists' in data
+  		&& data.lyricists.length > 0) {
+		let lyricists = data.lyricists.map((elem) => {
+			return {...elem, type: 'lyricist'};
+  		});
+  		artists = [...artists, ...lyricists];
+  	}
+  	return artists;
   }
 }

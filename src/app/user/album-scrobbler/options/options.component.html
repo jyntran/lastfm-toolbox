@@ -22,6 +22,17 @@
 		</div>
 	</div>
 	<div class="field">
+	  <label class="label">Artist Name</label>
+		<div class="select">
+		  <select
+		    name="artist"
+		    [ngModel]="album.artists"
+		    (ngModelChange)="onArtistNameChange($event)">
+		    <option *ngFor="let artist of album.artists" [ngValue]="artist">{{getArtistName(artist)}}</option>
+		  </select>
+		</div>
+	</div>
+	<div class="field">
 	  <label class="label">Artist Name Language</label>
 		<div class="select">
 		  <select

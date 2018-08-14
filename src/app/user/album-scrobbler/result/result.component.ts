@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Album, Disc, Track } from '../../../models';
 
 @Component({
@@ -6,9 +6,14 @@ import { Album, Disc, Track } from '../../../models';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css']
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent implements OnInit, OnChanges {
   @Input()
   album: any;
+  @Input()
+  artist: any;
+
+  @Input()
+  languages: any;
   @Input()
 	language = {
 		album: '',
@@ -16,8 +21,10 @@ export class ResultComponent implements OnInit {
 		artist: ''
 	}
 
-	@Output()
-	emitScrobble = new EventEmitter();
+  @Output()
+  emitScrobble = new EventEmitter();
+
+  objectKeys = Object.keys;
 
   constructor() { }
 
@@ -32,14 +39,39 @@ export class ResultComponent implements OnInit {
 		return track.name[this.language.track];
 	}
 
-	getArtistName(track: Track) {
-		return track.artist[this.language.artist];
+	getArtistName(artist) {
+		return artist.names[this.language.artist];
+	}
+
+	setArtistName(track, newVal) {
+		track.artist = newVal;
+		console.log('set artist name', event, this.album);
+	}
+
+	setArtistLang(track, newVal) {
+		console.log(newVal);
+		track.artist.lang = newVal;
+		console.log(track);
+		console.log('a', this.album)
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		if (this.album && changes.artist) {
+			console.log('change', changes)
+			this.album.discs.forEach((disc) => {
+				disc.tracks.forEach((track) => {
+					track.artist = changes.artist.currentValue;
+				})
+			});
+			console.log('changed', this.album);	
+		}
 	}
 
 	formTrack(track: Track) {
+		console.log('track', track)
 		return {
 			name: this.getTrackName(track),
-			artist: this.getArtistName(track),
+			artist: track.artist.names[track.artist.lang],
 			album: this.getAlbumName(),
 			number: track.number
 		};
@@ -64,6 +96,7 @@ export class ResultComponent implements OnInit {
 				tracks.push(this.formTrack(track));
 			})
 		});
-  	this.emitScrobble.next(tracks);
+		console.log('scrobbleAlbum', tracks);
+  	//this.emitScrobble.next(tracks);
 	}
 }

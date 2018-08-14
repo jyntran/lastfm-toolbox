@@ -1,6 +1,6 @@
 export class Track {
   name: Object;
-  artist: Object;
+  artist: any;
   album: Object;
   number: number;
 

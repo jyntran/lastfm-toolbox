@@ -6,6 +6,7 @@
 </app-lookup>
 <app-options
 (emitEvent)="languageChange($event)"
+(emitArtist)="artistChange($event)"
 [album]="album"
 [language]="language"
 >
@@ -14,5 +15,6 @@
 (emitScrobble)="scrobble($event)"
 [album]="album"
 [language]="language"
+[artist]="artist"
 >
 </app-result>
