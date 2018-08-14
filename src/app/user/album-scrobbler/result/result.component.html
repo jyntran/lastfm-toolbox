@@ -42,7 +42,7 @@
 								name="artist"
 								[ngModel]="track.artist"
 								(ngModelChange)="setArtistName(track, $event)">
-								<option *ngFor="let artist of album.artists" [ngValue]="artist">{{getArtistName(artist)}}</option>
+								<option *ngFor="let artist of album.artists" [ngValue]="artist">{{getInitialArtistName(artist)}}</option>
 								</select>
 							</div>
 							<div class="select">
@@ -52,6 +52,10 @@
 								(ngModelChange)="setArtistLang(track, $event)">
 								<option *ngFor="let lang of objectKeys(track.artist.names)" [value]="lang">{{lang}}</option>
 								</select>
+							</div>
+							<div class="field">
+								<input class="input" type="text" placeholder="Artist Name" [(ngModel)]="track.artist.name"
+								>
 							</div>
 						</td>
 					</tr>

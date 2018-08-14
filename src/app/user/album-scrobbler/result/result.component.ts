@@ -39,18 +39,31 @@ export class ResultComponent implements OnInit, OnChanges {
 		return track.name[this.language.track];
 	}
 
+	getInitialArtistName(artist) {
+		return artist.names[Object.keys(artist.names)[0]];
+	}
+
 	getArtistName(artist) {
 		return artist.names[this.language.artist];
 	}
 
 	setArtistName(track, newVal) {
 		track.artist = newVal;
+		track.artist.name = newVal.names[track.artist.lang];
+		console.log(track.artist);
 		console.log('set artist name', event, this.album);
+	}
+
+	overrideArtistName(track, newVal) {
+		console.log(track);
+		track.artist.name = newVal;
+		console.log(track.artist.name);
 	}
 
 	setArtistLang(track, newVal) {
 		console.log(newVal);
 		track.artist.lang = newVal;
+		track.artist.name = track.artist.names[newVal];
 		console.log(track);
 		console.log('a', this.album)
 	}
@@ -71,7 +84,7 @@ export class ResultComponent implements OnInit, OnChanges {
 		console.log('track', track)
 		return {
 			name: this.getTrackName(track),
-			artist: track.artist.names[track.artist.lang],
+			artist: track.artist.name,
 			album: this.getAlbumName(),
 			number: track.number
 		};
@@ -97,6 +110,6 @@ export class ResultComponent implements OnInit, OnChanges {
 			})
 		});
 		console.log('scrobbleAlbum', tracks);
-  	//this.emitScrobble.next(tracks);
+  	this.emitScrobble.next(tracks);
 	}
 }
