@@ -50,38 +50,28 @@ export class ResultComponent implements OnInit, OnChanges {
 	setArtistName(track, newVal) {
 		track.artist = newVal;
 		track.artist.name = newVal.names[track.artist.lang];
-		console.log(track.artist);
-		console.log('set artist name', event, this.album);
 	}
 
 	overrideArtistName(track, newVal) {
-		console.log(track);
 		track.artist.name = newVal;
-		console.log(track.artist.name);
 	}
 
 	setArtistLang(track, newVal) {
-		console.log(newVal);
 		track.artist.lang = newVal;
 		track.artist.name = track.artist.names[newVal];
-		console.log(track);
-		console.log('a', this.album)
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (this.album && changes.artist) {
-			console.log('change', changes)
 			this.album.discs.forEach((disc) => {
 				disc.tracks.forEach((track) => {
 					track.artist = changes.artist.currentValue;
 				})
 			});
-			console.log('changed', this.album);	
 		}
 	}
 
 	formTrack(track: Track) {
-		console.log('track', track)
 		return {
 			name: this.getTrackName(track),
 			artist: track.artist.name,
@@ -109,7 +99,6 @@ export class ResultComponent implements OnInit, OnChanges {
 				tracks.push(this.formTrack(track));
 			})
 		});
-		console.log('scrobbleAlbum', tracks);
-  	this.emitScrobble.next(tracks);
+	  	this.emitScrobble.next(tracks);
 	}
 }
