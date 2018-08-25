@@ -98,7 +98,6 @@ export class LookupComponent implements OnInit {
 		});
 	  	return new Album({
 	  		name: name,
-	  		artist: '-',
 	  		discs: discs,
 	  		artwork: albumData.picture_thumb,
 	  		langTitle: langTitle,
@@ -129,6 +128,7 @@ export class LookupComponent implements OnInit {
 					name: trackName,
 					number: t.trackNumber,
 					artist: artistName,
+					disc: i
 				});
 				tracks.push(track);
 			});
@@ -146,11 +146,12 @@ export class LookupComponent implements OnInit {
 	let discCount = albumData.discs.length;
 	albumData.discs.forEach((d, i) => {
 		var tracks = [];
-		d.tracks.forEach((t, i) => {
+		d.tracks.forEach((t, j) => {
 			let track = new Track({
 				name: t.names,
-				number: i+1,
+				number: j+1,
 				artist: artist,
+				disc: i+1
 			});
 			tracks.push(track);
 		})

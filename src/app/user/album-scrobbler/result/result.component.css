@@ -14,7 +14,8 @@ td.scrobble-cell
 	width: 120px;
 }
 
-td.track-number-cell
+td.track-number-cell,
+th.track-number-cell
 {
 	text-align: right;
 	width: 48px;

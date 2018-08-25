@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Album, Disc, Track } from '../../../models';
 
 @Component({
@@ -6,9 +7,9 @@ import { Album, Disc, Track } from '../../../models';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css']
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent implements OnInit, OnChanges {
   @Input()
-  album: any;
+  private album: any;
   @Input()
 	language = {
 		album: '',
@@ -19,10 +20,44 @@ export class ResultComponent implements OnInit {
 	@Output()
 	emitScrobble = new EventEmitter();
 
-  constructor() { }
+	currentAlbum: any = {};
+	albumFormGroup: FormGroup;
+
+	constructor(private fb: FormBuilder) {
+		this.albumFormGroup = this.fb.group({});
+	}
 
   ngOnInit() {
   }
+
+  ngOnChanges(changes) {
+  	if (changes.album) {
+	  	this.album = changes.album.currentValue;
+	  	this.currentAlbum = this.album;
+			this.updateForm();
+		}
+	}
+
+	updateForm() {
+		this.albumFormGroup.addControl(
+			'AlbumName', new FormControl('')
+		);
+		this.albumFormGroup.addControl(
+			'AlbumArtistName', new FormControl('')
+		);
+		if (this.album) {
+			this.album.discs.forEach((disc, i) => {
+				disc.tracks.forEach((track, j) => {
+					this.albumFormGroup.addControl(
+						'Disc' + i + 'TrackName' + j, new FormControl('')
+					);
+					this.albumFormGroup.addControl(
+						'Disc' + i + 'ArtistName' + j, new FormControl('')
+					);
+				});
+			});
+		}
+	}
 
 	getAlbumName() {
 		return this.album.name[this.language.album];
@@ -37,15 +72,35 @@ export class ResultComponent implements OnInit {
 	}
 
 	formTrack(track: Track) {
-		return {
+		let t = {
 			name: this.getTrackName(track),
 			artist: this.getArtistName(track),
 			album: this.getAlbumName(),
 			number: track.number
 		};
+		let albumOverride = this.albumFormGroup.controls['AlbumName'].value;
+		if (albumOverride && albumOverride != '') {
+			t.album = albumOverride;
+		}
+		let discNum = track.disc-1;
+		let trackNum = track.number-1;
+		let trackOverride = this.albumFormGroup.controls['Disc'+discNum+'TrackName'+trackNum].value;
+		if (trackOverride && trackOverride != '') {
+			t.name = trackOverride;
+		}
+		let artistOverride = this.albumFormGroup.controls['Disc'+discNum+'ArtistName'+trackNum].value;
+		if (artistOverride && artistOverride != '') {
+			t.artist = artistOverride;
+		}
+		let albumArtistOverride = this.albumFormGroup.controls['AlbumArtistName'].value;
+		if (albumArtistOverride && albumArtistOverride != '') {
+			t.artist = albumArtistOverride;
+		}
+		return t;
 	}
 
 	scrobbleTrack(track: Track) {
+		//console.log('track', this.formTrack(track));
   	this.emitScrobble.next([this.formTrack(track)]);
 	}
 
@@ -54,6 +109,7 @@ export class ResultComponent implements OnInit {
 		disc.tracks.forEach((track) => {
 			tracks.push(this.formTrack(track));
 		});
+		//console.log('tracks', tracks);
   	this.emitScrobble.next(tracks);
 	}
 
@@ -62,8 +118,9 @@ export class ResultComponent implements OnInit {
 		this.album.discs.forEach((disc) => {
 			disc.tracks.forEach((track) => {
 				tracks.push(this.formTrack(track));
-			})
+			});
 		});
+		//console.log('tracks', tracks);
   	this.emitScrobble.next(tracks);
 	}
 }
