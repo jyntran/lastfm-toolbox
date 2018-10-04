@@ -1,0 +1,79 @@
+<section class="section" *ngIf="album">
+	<div class="container album-info" [formGroup]="albumFormGroup">
+		<div class="columns">
+			<div class="column is-one-quarter" *ngIf="album.artwork">
+				<figure class="image">
+				  <img src="{{album.artwork}}">
+				</figure>
+			</div>
+			<div class="column is-two-thirds">
+				<div class="field">
+					<h3 class="title is-4">{{getAlbumName()}}</h3>
+					<input
+					class="input is-large"
+					type="text"
+					[formControlName]="'AlbumName'"
+					placeholder="Override album name">
+					<hr>
+				</div>
+				<div class="field">
+					<h4 class="subtitle is-5" *ngIf="album.artist">{{album.artist}}</h4>
+					<input
+					class="input"
+					type="text"
+					[formControlName]="'AlbumArtistName'"
+					placeholder="Override album artist name">
+					<p class="help">Warning: this field will override artist values for all tracks!</p>
+					<hr>
+				</div>
+				<div class="field">
+					<button class="button"
+					(click)="scrobbleAlbum()">
+					Scrobble Album</button>
+				</div>
+			</div>
+		</div>
+		<div *ngFor="let disc of album.discs; let i = index">
+			<table class="table is-fullwidth is-hoverable">
+				<thead>
+					<th><button class="button"
+					(click)="scrobbleDisc(disc)">
+					Scrobble Disc {{disc.number}}</button></th>
+					<th class="track-number-cell">#</th>
+					<th>Track</th>
+					<th>Artist</th>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of disc.tracks; let j = index"
+					class="track">
+						<td class="scrobble-cell">
+						  <button class="button"
+						  (click)="scrobbleTrack(track)">Scrobble</button>
+						</td>
+						<td class="track-number-cell">{{track.number}}.</td>
+						<td>
+							<span class="track-name">{{getTrackName(track)}}</span>
+							<div class="field">
+								<input
+								class="input"
+								type="text"
+								[formControlName]="'Disc'+i+'TrackName'+j"
+								placeholder="Override track name">
+							</div>
+						</td>
+						<td class="artist-cell">
+							<span class="artist-name">{{getArtistName(track)}}</span>
+							<div class="field">
+								<input
+								class="input"
+								type="text"
+								[formControlName]="'Disc'+i+'ArtistName'+j"
+								placeholder="Override artist name">
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>

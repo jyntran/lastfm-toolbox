@@ -1,0 +1,21 @@
+<div class="box">
+	<form #lookupForm="ngForm"
+	(ngSubmit)="onSubmit()">
+		<div class="field">
+		  <label class="label">Link to album</label>
+		  <div class="control">
+		    <input class="input" type="text" placeholder="Paste link here"
+		    required
+		    name="url"
+		    [ngModel]="url"
+		    (ngModelChange)="onChange($event)"
+		    [value]="url">
+		  </div>
+		</div>
+	  	<div class="field">
+		  <div class="control">
+			  <button class="button">Lookup</button>
+			</div>
+		</div>
+	</form>
+</div>
